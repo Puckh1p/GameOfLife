@@ -16,6 +16,10 @@ public class GameBoard : MonoBehaviour
     private HashSet<Vector3Int> aliveCells;
     private HashSet<Vector3Int> cellsToCheck;
 
+    public int population {  get; private set; }
+    public int iterations {  get; private set; }
+    public float time {  get; private set; }
+
     private void Awake()
     {
         aliveCells = new HashSet<Vector3Int>();
@@ -39,12 +43,19 @@ public class GameBoard : MonoBehaviour
             currentState.SetTile((Vector3Int)cell, aliveTile);
             aliveCells.Add(cell);
         }
+
+        population = aliveCells.Count;
     }
 
     private void Clear()
     {
         currentState.ClearAllTiles();
         nextState.ClearAllTiles();
+        aliveCells.Clear();
+        cellsToCheck.Clear();
+        population = 0;
+        iterations = 0;
+        time = 0;
     }
 
     private void OnEnable()
@@ -53,10 +64,18 @@ public class GameBoard : MonoBehaviour
     }
     private IEnumerator Simulate()
     {
+        var interval = new WaitForSeconds(updateInterval);
+        yield return interval;
+
         while (enabled)
         {
             UpdateState();
-            yield return new WaitForSeconds(updateInterval);
+
+            population = aliveCells.Count;
+            iterations++;
+            time += updateInterval;
+
+            yield return interval;
         }
     }
 
