@@ -88,7 +88,7 @@ public class GameBoard : MonoBehaviour
         {
             for(int x = -1; x <= 1; x++)
             {
-                for(int  y = -1; y <= 1;)
+                for(int  y = -1; y <= 1; y++)
                 {
                     cellsToCheck.Add(cell + new Vector3Int(x, y, 0));
                 }
@@ -129,7 +129,7 @@ public class GameBoard : MonoBehaviour
 
         for (int x = -1; x <= 1; x++)
         {
-            for (int y = -1; y <= 1;)
+            for (int y = -1; y <= 1; y++)
             {
                 Vector3Int neighbor = cell + new Vector3Int(x, y, 0);
 
