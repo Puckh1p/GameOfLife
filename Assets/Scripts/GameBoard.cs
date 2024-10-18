@@ -103,7 +103,7 @@ public class GameBoard : MonoBehaviour
     // Método que actualiza el estado de todas las celdas en el tablero.
     private void UpdateState()
     {
-        cellsToCheck.Clear();  // Limpia las celdas a revisar.
+        // Limpia las celdas a revisar.
 
         // Recolecta las celdas vivas y sus vecinas para revisarlas.
         foreach (Vector3Int cell in aliveCells)
@@ -140,12 +140,21 @@ public class GameBoard : MonoBehaviour
             }
         }
 
+        Tilemap temp = currentState;
+
+        currentState = nextState;
+        nextState = temp;
+        nextState.ClearAllTiles();
+
+
         // Intercambia los estados: el siguiente estado pasa a ser el actual y viceversa.
-        currentState.ClearAllTiles();  // Borra el Tilemap actual para actualizarlo con el nuevo estado.
-        foreach (Vector3Int cell in aliveCells)
-        {
-            currentState.SetTile(cell, aliveTile);  // Actualiza el estado del Tilemap actual.
-        }
+        //currentState.ClearAllTiles(); // Borra el Tilemap actual para actualizarlo con el nuevo estado.
+        //foreach (Vector3Int cell in aliveCells)
+        //{
+        //    currentState.SetTile(cell, aliveTile);  // Actualiza el estado del Tilemap actual.
+        //}
+
+        //cellsToCheck.Clear();
     }
 
     // Método que cuenta el número de vecinos vivos alrededor de una celda.
